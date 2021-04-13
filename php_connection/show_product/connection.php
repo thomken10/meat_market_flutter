@@ -1,22 +1,51 @@
-<?php 
-    class DB_CONNECT{
-        function __construct(){
-            $this->connect();
-        }
-        function __destruct(){
-            $this->close();
-        }
-        function connect(){
-            require_once __DIR__ '/config.php';
+<?php
 
-            $con = mysqsli_connect(DB_SERVER, DB_USER, DB_PASSWORD) or die(mysqli_error());
+/**
+ * A class file to connect to database
+ */
 
-            $db = mysqli_select_db($con, DB_DATABASE) or die(mysqli_error($con)) or die(mysqli_error($con));
+ 
 
-            return $con
-        }
-        function close(){
-            mysqli_close($this->connect()); 
-        }
+class DB_CONNECT {
+
+    // constructor
+    function __construct() {
+        // connecting to database
+     
+        $this->connect();
     }
+
+    // destructor
+    function __destruct() {
+        // closing db connection
+        $this->close();
+    }
+
+    /**
+     * Function to connect with database
+     */
+    function connect() {
+        // import database connection variables
+        require_once __DIR__ . '/config.php';
+    //echo "bah";
+        // Connecting to mysql database
+        $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD) or die(mysqli_error());
+
+        // Selecing database
+        $db = mysqli_select_db($con,DB_DATABASE) or die(mysqli_error($con)) or die(mysqli_error($con));
+
+        // returing connection cursor
+        return $con;
+    }
+
+    /**
+     * Function to close db connection
+     */
+    function close() {
+        // closing db connection
+        mysqli_close($this->connect());
+    }
+
+}
+
 ?>
